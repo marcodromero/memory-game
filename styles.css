@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Stint+Ultra+Condensed&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background-color: #6c9f50;
+}
+
+.game-container{
+  width: 100%;
+}
+
+.game__title{
+  text-align: center;
+  font-size: 2em;
+  font-family: "Stint Ultra Condensed", serif;
+  margin: 10px auto;
+}
+
+/*Default Button*/
+.button{
+  border-style: none;
+  padding: 6px;
+  cursor: pointer;
+  font-family: "Stint Ultra Condensed", serif;
+  background-color: #ffc83d;
+  font-size: 28px;
+  margin: 4px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.button:hover{
+   background-color: #e9b637;
+}
+
+/*Main menu*/
+.menu{
+  background-color: #fdd8a8;
+  font-family: "Stint Ultra Condensed", serif;
+  margin: 4px auto;
+  text-align: center;
+  padding: 10px;
+}
+
+.menu__info{
+  font-family: "Stint Ultra Condensed", serif;
+  font-size: 24px;
+  color: #3b2819;
+  margin-bottom: 10px;
+}
+
+
+/*Leaderboard*/
+.leaderboard{
+  background-color: #fdd8a8;
+  margin: 4px auto;
+  text-align: center;
+  font-family: "Stint Ultra Condensed", serif;
+  font-weight: normal;
+}
+
+.leaderboard__header{
+  width: 100%;
+  background-color: #641f16;
+}
+
+.leaderboard__title{
+  font-size: 1.8em;
+  color:#fdd8a8;
+}
+
+.leaderboard__table{
+  padding: 8px;
+  color: #3b2819;
+  text-align: center;
+  font-size: 1.5em;
+  width: 100%;
+}
+
+.leaderboard__table td{
+  width: 30%;
+}
+
+.leaderboard__table thead{
+  font-weight: bold;
+}
+
+.leaderboard__footer{
+  padding: 8px;
+}
+
+/*Game board*/
+.board{
+  margin: auto;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 4px;      
+}
+
+.board__emoji{
+  font-size: 38px;
+  user-select: none;
+}
+
+.board__card{
+  background-color: #ffffff;
+  padding: 26px;
+  margin: 4px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/*Results*/
+.results{
+  background-color: #fdd8a8;
+  margin: 4px auto;
+  text-align: center;
+  font-family: "Stint Ultra Condensed", serif;
+  color: #3b2819;
+  padding: 32px 0;
+}
+
+.results__fields{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.results__title{
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.results__time{
+  font-weight: bold;
+  font-size: 3em;
+  margin-bottom: 8px;
+}
+
+.results__player-name{
+  padding: 4px;
+}
+
+.button--submit{
+  font-size: 1.3em;
+  padding: 2px 4px;
+ }
+
+
+@media (min-width: 1250px) {
+  .board{
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+  }
+
+  .menu, .leaderboard, .results, .board{
+    width: 50%;
+  }
+
+}
