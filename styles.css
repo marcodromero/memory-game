@@ -39,6 +39,7 @@ body{
 
 /*Main menu*/
 .menu{
+  display:none;
   background-color: #fdd8a8;
   margin: 4px auto;
 }

@@ -18,17 +18,15 @@
         <b>Instrucciones:</b> Click en dos cartas que creas identicas. Al acertar o errar deberas escoger otras dos hasta que logres encontrar todos los pares de cartas.
         </p>
         <button class="button" id="btnStartGame">JUGAR</button>
-        <button class="button ">TABLA DE CLASIFICACIÓN</button>
+        <button class="button" id="btnLeaderboard">TABLA DE CLASIFICACIÓN</button>
       </div> 
     </section>
     <section class="board" id="board"></section>
-    <section class="leaderboard">
+    <section class="leaderboard" id="leaderboard" >
       <div class="leaderboard__header">
         <h1 class="leaderboard__title">CLASIFICACIÓN</h1>
       </div>
-      
-     
-        <table class="leaderboard__table">
+        <table class="leaderboard__table" >
           <thead>
             <tr>
               <td>Posición</td>
@@ -36,23 +34,14 @@
               <td>Tiempo</td>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Marco</td>
-              <td>1:58</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Joana</td>
-              <td>2:56</td>
-            </tr>
+          <tbody id="leaderboardTbody">
+            
           </tbody>
         </table>
      <div class="leaderboard__footer">
-       <button class="button">JUGAR</button>
-       <button class="button">REGLAS</button>
-       <button class="button">VACIAR TABLA</button>
+       <button class="button" id="btnStartGame2">JUGAR</button>
+       <button class="button" id="btnRules">MENÚ</button>
+       <button class="button" id="btnDeleteLeaderboard">VACIAR TABLA</button>
      </div>
     </section>
     <section class="results" id="results">
@@ -61,7 +50,7 @@
       
         <div class="results__fields">
            <input id="playerName" class="results__player-name" type="text" placeholder="ingresá tu nombre"/>
-           <button class="button button--submit">Guardar</button>
+           <button class="button button--submit" id="btnSaveResult">Guardar</button>
         </div>
       
     </section>
