@@ -11,38 +11,17 @@
   <section class="game__container">
     <h1 class="game__title">JUEGO DE LA MEMORIA</h1>
     
-    <section class="menu">
-      <p class="menu__info"><b>Objetivo:</b> Encontrar todos los pares de cartas identicas en el menor tiempo posible.
+    <section class="menu" id="menu">
+      <div class="menu__container">
+        <p class="menu__info"><b>Objetivo:</b> Encontrar todos los pares de cartas identicas en el menor tiempo posible.
         <br>
         <b>Instrucciones:</b> Click en dos cartas que creas identicas. Al acertar o errar deberas escoger otras dos hasta que logres encontrar todos los pares de cartas.
-      </p>
-      <button class="button ">JUGAR</button>
-      <button class="button ">TABLA DE CLASIFICACIÓN</button>
+        </p>
+        <button class="button" id="btnStartGame">JUGAR</button>
+        <button class="button ">TABLA DE CLASIFICACIÓN</button>
+      </div> 
     </section>
-    <section class="board">
-      
-        <div class="board__card"><div class="board__emoji">🐬</div></div>
-        <div class="board__card"><div class="board__emoji">🍕</div></div>
-        <div class="board__card"><div class="board__emoji">🎁</div></div>
-        <div class="board__card"><div class="board__emoji">🤪</div></div>
-        <div class="board__card"><div class="board__emoji">🦁</div></div>
-        <div class="board__card"><div class="board__emoji">🔒</div></div>
-          
-        <div class="board__card"><div class="board__emoji">🐬</div></div>
-        <div class="board__card"><div class="board__emoji">🍕</div></div>
-        <div class="board__card"><div class="board__emoji">🎁</div></div>
-        <div class="board__card"><div class="board__emoji">🤪</div></div>
-        <div class="board__card"><div class="board__emoji">🦁</div></div>
-        <div class="board__card"><div class="board__emoji">🔒</div></div>
-          
-        <div class="board__card"><div class="board__emoji">🐬</div></div>
-        <div class="board__card"><div class="board__emoji">🍕</div></div>
-        <div class="board__card"><div class="board__emoji">🎁</div></div>
-        <div class="board__card"><div class="board__emoji">🤪</div></div>
-        <div class="board__card"><div class="board__emoji">🦁</div></div>
-        <div class="board__card"><div class="board__emoji">🔒</div></div>
-      
-    </section>
+    <section class="board" id="board"></section>
     <section class="leaderboard">
       <div class="leaderboard__header">
         <h1 class="leaderboard__title">CLASIFICACIÓN</h1>
@@ -76,15 +55,15 @@
        <button class="button">VACIAR TABLA</button>
      </div>
     </section>
-    <section class="results">
+    <section class="results" id="results">
       <h1 class="results__title">TU TIEMPO FUE:</h1>
-      <p class="results__time">1:58</p>
-      <form action="">
+      <p id="results__time"></p>
+      
         <div class="results__fields">
-           <input class="results__player-name" type="text" placeholder="ingresá tu nombre"/>
-          <input class="button button--submit" type="submit" value="Guardar"/>
+           <input id="playerName" class="results__player-name" type="text" placeholder="ingresá tu nombre"/>
+           <button class="button button--submit">Guardar</button>
         </div>
-      </form>
+      
     </section>
   </section>
   <script src="./index.js"></script>
