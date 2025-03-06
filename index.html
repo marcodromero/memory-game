@@ -9,6 +9,7 @@
 <body>
   
   <section class="game__container">
+    <div id="protection"></div>
     <h1 class="game__title">JUEGO DE LA MEMORIA</h1>
     
     <section class="menu" id="menu">
@@ -54,6 +55,18 @@
         </div>
       
     </section>
+
+    <audio id="audioCorrect">
+      <source src="./sounds/correct.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="audioIncorrect">
+      <source src="./sounds/incorrect.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="audioWin">
+      <source src="./sounds/win.mp3" type="audio/mpeg">
+    </audio>
   </section>
   <script src="./index.js"></script>
 </body>

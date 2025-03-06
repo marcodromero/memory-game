@@ -18,6 +18,10 @@ class App{
     this.minutes = 0
     this.intervalId = null;
     this.dataLeaderboard = [];
+    this.audioWin = document.getElementById("audioWin");
+    this.audioCorrect = document.getElementById("audioCorrect");
+    this.audioIncorrect= document.getElementById("audioIncorrect");
+    this.notification = null;
   }
 
   init(){
@@ -62,9 +66,14 @@ class App{
   }
 
   renderBoard(){
+    this.board.innerHTML = '';
     this.menu.style.display = "none";
     this.leaderboard.style.display = "none";   
-    this.board.style.display = "grid";    
+    this.board.style.display = "grid";
+    const notificationContainer = document.createElement("div");
+    notificationContainer.id = "notification";
+    this.board.appendChild(notificationContainer);
+    this.notification = document.getElementById("notification");
     
     for(let i = 0; i < this.emojis.length ; i++){
       let flipCard = document.createElement("div");
@@ -105,49 +114,92 @@ class App{
 
   saveElectionOfPlayer = (e)=>{
     let card = e.target.closest(".board__flip-card");
+    const flipCardInner = card.children[0];
+    flipCardInner.classList.add("animation__show-card");
+ 
     console.log("haz hecho clik en:", card.id);
     
     if(this.elections.length < 2){
-      if(card.id != this.elections[0]){
+      if(this.elections.length == 0  || this.elections[0]?.id != card.id){
         console.log("ingresado al array");
-        this.elections.push(card.id);
+        this.elections.push({flipCardInner, id:card.id});
       }
     }
 
     if(this.elections.length == 2){
       this.compareElections();
-      this.elections = []
+      
     }
   }
 
-  compareElections(){
-    if(this.emojis[this.elections[0]] === this.emojis[this.elections[1]] ){
-        console.log("Has acertado");
-        this.blockCards();
+   compareElections(){
+    this.protectBoard()
+    if(this.emojis[this.elections[0].id] === this.emojis[this.elections[1].id] ){
+        this.showNotification("¡ACERTASTE!✔️")
+        this.playAudio(this.audioCorrect);
         this.counter++;
-        this.verifyGameCompleted();  
-      }else{
-        console.log("Has errado")
-      }
+        this.verifyGameCompleted();
+        this.removeEventClickOfCards();
+        this.applyFilterToCards();
+        this.elections = []
+        
+
+    }else{
+        this.showNotification("¡ERRASTE!❌")
+        this.playAudio(this.audioIncorrect);
+        setTimeout(()=>{
+          this.elections[0].flipCardInner.classList.remove("animation__show-card");
+          this.elections[1].flipCardInner.classList.remove("animation__show-card");
+          this.elections = []
+        }, 2000)
+    }
   }
 
-  verifyGameCompleted(){
+  showNotification(text){
+    this.notification.innerHTML = '';
+    const textContainer = document.createElement("p");
+    const textNode = document.createTextNode(text);
+    textContainer.appendChild(textNode);
+    this.notification.appendChild(textContainer);
+    notification.style.display = "flex";
+    setTimeout(() => {
+      notification.style.display = "none";
+    }, 1000);
+  }
+
+   verifyGameCompleted(){
     if(this.counter == (this.emojis.length)/2){
           clearInterval(this.intervalId);
           console.log(this.counter, (this.emojis.length)/2)
+          this.playAudio(this.audioWin);
           this.renderResult(); 
       }
   }
 
-  blockCards(){
-    const card1 = document.getElementById(String(this.elections[0]));
-    const card2 = document.getElementById(String(this.elections[1]));
-    card1.removeEventListener("click", this.saveElectionOfPlayer);
-    card2.removeEventListener("click", this.saveElectionOfPlayer);
+  protectBoard(){
+    let protectionElement = document.getElementById("protection");
+    protectionElement.style.display = "block"
+ 
+    setTimeout(() => {
+       protectionElement.style.display = "none"
+    }, 2000);
+  }
+
+  applyFilterToCards(){
+    this.elections[0].flipCardInner.children[1].style.filter= "grayscale(1)";
+    this.elections[0].flipCardInner.children[1].style.backgroundColor= "#d3d3d3";
+    this.elections[1].flipCardInner.children[1].style.filter= "grayscale(1)";
+    this.elections[1].flipCardInner.children[1].style.backgroundColor= "#d3d3d3";
+  } 
+
+  removeEventClickOfCards(){
+    document.getElementById(String(this.elections[0].id)).removeEventListener("click", this.saveElectionOfPlayer);
+    document.getElementById(String(this.elections[1].id)).removeEventListener("click", this.saveElectionOfPlayer);
   }
  
   renderResult(){
     let resultTime = document.getElementById("results__time");
+    resultTime.innerHTML = "";
     let times = document.createTextNode(`${this.minutes}:${this.seconds.toString().padStart(2,'0')}`);
     resultTime.appendChild(times);
     this.board.style.display = "none";
@@ -204,6 +256,10 @@ class App{
   deleteLeaderboard(){
     localStorage.removeItem("leaderboard");
     this.dataLeaderboard = [];
+  }
+
+  playAudio(audio){
+    audio.play();
   }
 
 }
