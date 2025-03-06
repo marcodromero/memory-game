@@ -40,6 +40,7 @@ class App{
     this.seconds = 0;
     this.minutes = 0;
     this.counter = 0;
+    this.shuffleArrayEmojis(this.emojis);
     this.intervalId && clearInterval(this.intervalId)
     this.renderBoard();
     this.startChronometer();
@@ -55,6 +56,14 @@ class App{
         this.seconds++;
       }      
     }, 1000);
+  }
+
+  shuffleArrayEmojis(array){
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   renderMainMenu(){
@@ -135,18 +144,24 @@ class App{
    compareElections(){
     this.protectBoard()
     if(this.emojis[this.elections[0].id] === this.emojis[this.elections[1].id] ){
-        this.showNotification("¡ACERTASTE!✔️")
-        this.playAudio(this.audioCorrect);
+        setTimeout(() => {
+          this.showNotification("¡ACERTASTE!✔️")
+          this.playAudio(this.audioCorrect);
+          this.applyFilterToCards();
+          this.elections = []
+        }, 1000);
+        
         this.counter++;
         this.verifyGameCompleted();
         this.removeEventClickOfCards();
-        this.applyFilterToCards();
-        this.elections = []
+        
         
 
     }else{
+      setTimeout(() => {
         this.showNotification("¡ERRASTE!❌")
         this.playAudio(this.audioIncorrect);
+      }, 1000);
         setTimeout(()=>{
           this.elections[0].flipCardInner.classList.remove("animation__show-card");
           this.elections[1].flipCardInner.classList.remove("animation__show-card");
@@ -167,12 +182,14 @@ class App{
     }, 1000);
   }
 
-   verifyGameCompleted(){
+  verifyGameCompleted(){
     if(this.counter == (this.emojis.length)/2){
           clearInterval(this.intervalId);
-          console.log(this.counter, (this.emojis.length)/2)
-          this.playAudio(this.audioWin);
-          this.renderResult(); 
+          setTimeout(() => {
+            this.playAudio(this.audioWin);
+            this.renderResult(); 
+          }, 2000);
+         
       }
   }
 
