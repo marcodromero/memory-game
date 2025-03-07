@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./styles.css"/>
-  <title>Juego de la memoria</title>
+  <title>El juego de la memoria</title>
 </head>
 <body>
-  
+  <button id="btnExit" class="button button--small">ABANDONAR</button>
   <section class="game__container">
     <div id="protection"></div>
     <h1 class="game__title">EL JUEGO DE LA MEMORIA</h1>
@@ -18,8 +18,11 @@
         <br>
         <b>Instrucciones:</b> Click en dos cartas que creas identicas. Al acertar o errar deberas escoger otras dos hasta que logres encontrar todos los pares de cartas.
         </p>
-        <button class="button" id="btnStartGame">JUGAR</button>
-        <button class="button" id="btnLeaderboard">TABLA DE CLASIFICACIÓN</button>
+        <div class="menu__buttons">
+          <button class="button" id="btnStartGame">JUGAR</button>
+          <button class="button" id="btnLeaderboard">TABLA DE CLASIFICACIÓN</button>
+        </div>
+        
       </div> 
     </section>
     <section class="board" id="board"></section>
@@ -50,8 +53,14 @@
       <p id="results__time"></p>
       
         <div class="results__fields">
-           <input id="playerName" class="results__player-name" type="text" placeholder="ingresá tu nombre"/>
+          <div class="results__fields-container">
+          <form action="">
+           <input id="playerName" class="results__player-name" type="text" placeholder="Ingresá tu nombre" minlength="3"
+  maxlength="10"/>
            <button class="button button--submit" id="btnSaveResult">Guardar</button>
+           </form>
+           <p id="alert">¡Ingresá al menos 3 letras!</p>
+           </div>
         </div>
       
     </section>

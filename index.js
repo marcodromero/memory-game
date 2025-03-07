@@ -12,7 +12,6 @@ class App{
     this.btnDeleteLeaderboard = document.getElementById("btnDeleteLeaderboard");
     this.btnRules= document.getElementById("btnRules");
     this.elections = [];
-    this.isGameCompleted = false;
     this.counter = 0;
     this.seconds = 0;
     this.minutes = 0
@@ -22,6 +21,8 @@ class App{
     this.audioCorrect = document.getElementById("audioCorrect");
     this.audioIncorrect= document.getElementById("audioIncorrect");
     this.notification = null;
+    this.btnExit = document.getElementById("btnExit");
+    
   }
 
   init(){
@@ -29,10 +30,11 @@ class App{
     (dataBrowserLeaderboard != undefined) && (this.dataLeaderboard = JSON.parse(dataBrowserLeaderboard));
     this.btnStartGame.addEventListener("click", ()=>this.startGame());
     this.btnStartGame2.addEventListener("click", ()=>this.startGame());
-    this.btnSaveResult.addEventListener("click", ()=>this.saveResult());
+    this.btnSaveResult.addEventListener("click", (e)=>{e.preventDefault(); this.saveResult()});
     this.btnLeaderboard.addEventListener("click", ()=>this.renderLeaderboard());
     this.btnDeleteLeaderboard.addEventListener("click", ()=>this.deleteLeaderboard());
     this.btnRules.addEventListener("click", ()=>this.renderMainMenu());
+    this.btnExit.addEventListener("click", ()=>this.renderMainMenu());
     this.renderMainMenu();
   } 
 
@@ -40,6 +42,7 @@ class App{
     this.seconds = 0;
     this.minutes = 0;
     this.counter = 0;
+    this.elections = [];
     this.shuffleArrayEmojis(this.emojis);
     this.intervalId && clearInterval(this.intervalId)
     this.renderBoard();
@@ -48,7 +51,7 @@ class App{
 
   startChronometer(){
     this.intervalId = setInterval(() => {
-      console.log(this.minutes, this.seconds);
+      
       if(this.seconds == 59){
         this.seconds = 0;
         this.minutes++; 
@@ -67,10 +70,14 @@ class App{
   }
 
   renderMainMenu(){
+    this.board.style.display = "none";
+    this.btnExit.style.display = "none";
     this.menu.style.display = "block";
     this.leaderboard.style.display = "none";
     if(this.dataLeaderboard.length == 0){
       this.btnLeaderboard.style.display = "none";
+    }else{
+      this.btnLeaderboard.style.display = "block";
     }
   }
 
@@ -83,6 +90,7 @@ class App{
     notificationContainer.id = "notification";
     this.board.appendChild(notificationContainer);
     this.notification = document.getElementById("notification");
+    this.btnExit.style.display = "block";
     
     for(let i = 0; i < this.emojis.length ; i++){
       let flipCard = document.createElement("div");
@@ -126,11 +134,11 @@ class App{
     const flipCardInner = card.children[0];
     flipCardInner.classList.add("animation__show-card");
  
-    console.log("haz hecho clik en:", card.id);
+   
     
     if(this.elections.length < 2){
       if(this.elections.length == 0  || this.elections[0]?.id != card.id){
-        console.log("ingresado al array");
+       
         this.elections.push({flipCardInner, id:card.id});
       }
     }
@@ -187,6 +195,7 @@ class App{
           clearInterval(this.intervalId);
           setTimeout(() => {
             this.playAudio(this.audioWin);
+            this.btnExit.style.display = "none";
             this.renderResult(); 
           }, 2000);
          
@@ -220,6 +229,8 @@ class App{
     let times = document.createTextNode(`${this.minutes}:${this.seconds.toString().padStart(2,'0')}`);
     resultTime.appendChild(times);
     this.board.style.display = "none";
+    const alert = document.getElementById("alert");
+    alert.style.display = "none";
     this.results.style.display = "block";
   }
 
@@ -246,17 +257,25 @@ class App{
     this.menu.style.display = "none";
     this.results.style.display = "none";
     this.leaderboard.style.display = "block";
+     
   }
 
   saveResult(){
     let playerName = document.getElementById("playerName").value;
-    console.log("playerName", playerName);
-    const playerData = {name: playerName, minutes: this.minutes, seconds: this.seconds};
-    this.dataLeaderboard.push(playerData);
-    this.dataLeaderboard = this.sortLeaderboard();
-    console.log("dataLeaderboardSorted", this.dataLeaderboard);
-    localStorage.setItem("leaderboard", JSON.stringify(this.dataLeaderboard));
-    this.renderLeaderboard();
+    playerName = playerName.trim();
+    if(playerName.length >= 3 && playerName.length <= 10){
+      const playerData = {name: playerName, minutes: this.minutes, seconds: this.seconds};
+      this.dataLeaderboard.push(playerData);
+      this.dataLeaderboard = this.sortLeaderboard();
+      
+      localStorage.setItem("leaderboard", JSON.stringify(this.dataLeaderboard));
+      this.renderLeaderboard();
+    }else{
+      const alert = document.getElementById("alert");
+      alert.style.display = "block";
+    }
+  
+    
   }
 
 
@@ -273,6 +292,7 @@ class App{
   deleteLeaderboard(){
     localStorage.removeItem("leaderboard");
     this.dataLeaderboard = [];
+    leaderboardTbody.innerHTML = '';
   }
 
   playAudio(audio){
