@@ -1,6 +1,6 @@
 class App{
   constructor(){
-    this.emojis = ["🐬","🍕","🎁","🤪","🦁","🔒", "🌻","🥳","🎹", "🐬","🍕","🎁","🤪","🦁","🔒", "🌻","🥳","🎹"];
+    this.emojis = ["🐬","🍕","🎁","🤪","❤️","🔒", "🌻","🥳","🎹", "🎅","🐬","🍕","🎁","🤪","❤️","🔒", "🌻","🥳","🎹","🎅"];
     this.board = document.getElementById("board");
     this.results = document.getElementById("results");
     this.leaderboard= document.getElementById("leaderboard");
